@@ -1,0 +1,18 @@
+body {
+    background-color: #415f68;
+}
+
+.books {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.book {
+    border: 2px solid #f7ff89;
+    padding: 10px;
+    color: #bc58eb;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
