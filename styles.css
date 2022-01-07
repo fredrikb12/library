@@ -21,6 +21,7 @@ body {
 }
 
 .book {
+    background-color: #51686e;
     border: 2px solid #3f4138;
     padding: 10px;
     color: #d57cff;
