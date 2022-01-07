@@ -167,7 +167,7 @@ submitBookButton.addEventListener("click", () => {
 
 
 
-addBook("Example Book", "Fredrik Bäckman", 1, true);
+addBook("Example Book", "Fredrik B", 1, true);
 addBooksToPage();
 
 
