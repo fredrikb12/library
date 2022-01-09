@@ -1,46 +1,71 @@
 let books = [];
 
-function Book(title, author, pages, haveRead) {
+class Book {
+    constructor(title, author, pages, haveRead) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.haveRead = haveRead;
+    }
+    
+    remove() {
+        const index = this.arrayIndex;
+        removeBookFromPage(index);
+        books.splice(index, 1);
+        shiftDataIndexes(index);
+        shiftArrayIndexes(index);
+    }
+
+    toggleRead() {
+        if (this.haveRead === true) {
+            this.haveRead = false;
+        } else {
+            this.haveRead = true;
+        }
+    }
+}
+
+/*function Book(title, author, pages, haveRead) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.haveRead = haveRead;
-}
+}*/
 
 function addBook(title, author, pages, haveRead) {
     const bookToAdd = new Book(title, author, pages, haveRead);
     bookToAdd.arrayIndex = books.push(bookToAdd) - 1;
 }
 
-Book.prototype.remove = function () {
+/*Book.prototype.remove = function () {
     const index = this.arrayIndex;
     removeBookFromPage(index);
     books.splice(index, 1);
     shiftDataIndexes(index);
     shiftArrayIndexes(index);
-}
+}*/
 
-Book.prototype.toggleRead = function () {
-    if(this.haveRead === true) {
+/*Book.prototype.toggleRead = function () {
+    if (this.haveRead === true) {
         this.haveRead = false;
     } else {
         this.haveRead = true;
     }
-}
+}*/
 
 function shiftDataIndexes(removedIndex) {
-        const allBooks = document.querySelectorAll("[data-arrayIndex]");
-        allBooks.forEach(book => {
-            if(book.getAttribute("data-arrayIndex") > removedIndex) {
-                const currentIndex = book.getAttribute("data-arrayIndex");
-                book.setAttribute("data-arrayIndex", currentIndex - 1);
-            }
-        });
+    const allBooks = document.querySelectorAll("[data-arrayIndex]");
+    allBooks.forEach(book => {
+        if (book.getAttribute("data-arrayIndex") > removedIndex) {
+            const currentIndex = book.getAttribute("data-arrayIndex");
+            book.setAttribute("data-arrayIndex", currentIndex - 1);
+        }
+    });
 }
 
 function shiftArrayIndexes(removedIndex) {
     books.forEach(book => {
-        if(book.arrayIndex > removedIndex) {
+        if (book.arrayIndex > removedIndex) {
             book.arrayIndex--;
         }
     });
@@ -48,7 +73,7 @@ function shiftArrayIndexes(removedIndex) {
 
 function clearPageFromBooks() {
     const container = document.querySelector(".books");
-    while(container.firstChild) {
+    while (container.firstChild) {
         container.removeChild(container.firstChild);
     }
 }
@@ -77,11 +102,11 @@ function addBooksToPage() {
         let haveRead = document.createElement("p");
         haveRead.classList.add("book-haveread");
         haveRead.textContent = `Have read: `;
-        
+
         let readInput = document.createElement("input");
         readInput.setAttribute("type", "checkbox");
         readInput.setAttribute("onchange", "handleReadToggle(this);")
-        if(books[i].haveRead) {
+        if (books[i].haveRead) {
             readInput.checked = true;
         } else {
             readInput.checked = false;
@@ -117,7 +142,7 @@ function removeBookFromPage(index) {
 function findBookOnPage(index) {
     const pageBooks = [...document.querySelectorAll(".book")];
     pageBooks.forEach(book => {
-        if(book.getAttribute("data-arrayIndex") == index) {
+        if (book.getAttribute("data-arrayIndex") == index) {
             return book;
         }
     });
@@ -140,8 +165,8 @@ modalCloseButton.addEventListener("click", () => {
     modal.style.display = "none";
 });
 
-window.onclick = function(event) {
-    if(event.target == modal) {
+window.onclick = function (event) {
+    if (event.target == modal) {
         modal.style.display = "none";
     }
 }
@@ -156,7 +181,7 @@ submitBookButton.addEventListener("click", () => {
     const pages = formPages
     let formHaveRead = document.querySelector(".haveread-input").checked;
     const haveRead = formHaveRead;
-    if(title !== "" && author !== "" && pages > 0) {
+    if (title !== "" && author !== "" && pages > 0) {
         addBook(title, author, pages, haveRead);
         addBooksToPage();
         modal.style.display = "none";
